@@ -27,7 +27,7 @@ class AuthController {
       return CustomResponse.sendWithError(res, 'Invalid Credentials!', 400);
     }
   }
-  async loginByGoogle(req: Request, res: Response) {
+  async oauth2Login(req: Request, res: Response) {
     const { user } = req;
 
     if (user) {

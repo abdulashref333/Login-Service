@@ -6,6 +6,7 @@ import { IUser } from '../src/modules/user/user.interface';
 import { IToken } from '../src/utils/jwt';
 import { NotAuthorizedError } from '../src/errors/not-auhorize-error';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import { Strategy as FacebookStrategy } from 'passport-facebook';
 
 passport.serializeUser((user: IUser, done) => {
   done(null, user.id);
@@ -15,6 +16,10 @@ passport.deserializeUser(async (id, done) => {
   const user = await User.findById(id);
   done(null, user);
 });
+
+/*
+jwt strategy
+*/
 
 passport.use(
   new JWTStrategy(
@@ -35,6 +40,9 @@ passport.use(
   ),
 );
 
+/*
+google strategy
+*/
 passport.use(
   new GoogleStrategy(
     {
@@ -44,6 +52,38 @@ passport.use(
       callbackURL: '/api/v1/auth/google/redirect',
     },
     async (accessToken, refreshToken, profile, done) => {
+      const user = await User.findOne({ googleId: profile.id });
+      if (user) done(null, user);
+      else {
+        try {
+          const newUser = await User.create({
+            firstname: profile.name.givenName,
+            lastname: profile.name.familyName,
+            email: profile.emails[0].value,
+            googleId: profile.id,
+          });
+          done(null, newUser);
+        } catch (error) {
+          done(error);
+          throw new Error(error.message);
+        }
+      }
+    },
+  ),
+);
+
+/*
+ facebook strategy
+*/
+
+passport.use(
+  new FacebookStrategy(
+    {
+      clientID: config.google.clientID,
+      clientSecret: config.google.clientSecret,
+      callbackURL: '/api/v1/auth/facebook/redirect',
+    },
+    async function verify(accessToken, refreshToken, profile, done) {
       const user = await User.findOne({ googleId: profile.id });
       if (user) done(null, user);
       else {

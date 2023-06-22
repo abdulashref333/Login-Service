@@ -15,6 +15,8 @@ export const checkingEnvVariables = () => {
       JWT_EXPIRATION: Joi.string().description('time after which access tokens expire'),
       GOOGLE_CLIENT_ID: Joi.string().required(),
       GOOGLE_CLIENT_SECRET: Joi.string().required(),
+      FACEBOOK_APP_ID: Joi.string().required(),
+      FACEBOOK_APP_SECRET: Joi.string().required(),
     })
     .unknown();
 
@@ -43,5 +45,9 @@ export const config = {
   google: {
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  },
+  facebook: {
+    clientID: process.env.FACEBOOK_APP_ID,
+    clientSecret: process.env.FACEBOOK_APP_SECRET,
   },
 };
