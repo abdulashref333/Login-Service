@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { BadRequestError } from '../../errors/bad-request-error';
 import UserService from './user.service';
-import { ICreateUser } from './user.interface';
+import { ICreateUser, IUserSerialized } from './user.interface';
 import { Password } from '../../utils/password';
 import { CustomResponse } from '../../utils/custome-response';
 import { JWT } from '../../utils/jwt';
@@ -30,6 +30,11 @@ class UserController {
     } else {
       throw new Error();
     }
+  }
+
+  async me(req: Request, res: Response) {
+    const { user } = req;
+    return CustomResponse.sendUser(res, user as IUserSerialized);
   }
 }
 

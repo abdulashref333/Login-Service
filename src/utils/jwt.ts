@@ -9,15 +9,14 @@ export interface IToken {
 
 export class JWT {
   static sign(user: IUserSerialized) {
-    const token = jwt.sign(
-      {
-        sub: user.id,
-        email: user.email,
-      } as IToken,
-      config.jwt.secret!,
-      { expiresIn: config.jwt.accessExpiration },
-    );
-    return token;
+    const token: IToken = {
+      sub: user.id,
+      email: user.email,
+    };
+
+    const signedToken = jwt.sign(token, config.jwt.secret!, { expiresIn: config.jwt.accessExpiration });
+
+    return signedToken;
   }
 
   static verify(token: string) {
