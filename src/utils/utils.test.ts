@@ -1,19 +1,5 @@
-import { Passport } from 'passport';
-import { User } from '../modules/user/user.model';
 import { JWT } from './jwt';
 import { Password } from './password';
-// const User = require('../modules/user/user.model');
-// const JWT = require('./jwt');
-
-// let user;
-// beforeAll(async function (done) {
-//   user = await User.create({
-//     firstname: 'test',
-//     lastname: '_test',
-//     email: 'test@test.com',
-//   });
-//   done();
-// });
 
 describe('Testing Utils', function () {
   describe('JWT Static Methods', () => {
