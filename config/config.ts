@@ -12,7 +12,7 @@ export const checkingEnvVariables = () => {
       PORT: Joi.number().default(3000),
       MONGODB_URL: Joi.string().required().description('Mongo DB url'),
       JWT_SECRET: Joi.string().required().description('JWT secret key'),
-      JWT_ACCESS_EXPIRATION_MINUTES: Joi.number().default(30).description('minutes after which access tokens expire'),
+      JWT_EXPIRATION: Joi.string().description('time after which access tokens expire'),
     })
     .unknown();
 
@@ -36,6 +36,6 @@ export const config = {
   },
   jwt: {
     secret: process.env.JWT_SECRET,
-    accessExpirationMinutes: process.env.JWT_ACCESS_EXPIRATION_MINUTES,
+    accessExpiration: process.env.JWT_EXPIRATION,
   },
 };

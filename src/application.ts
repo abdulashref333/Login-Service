@@ -3,16 +3,15 @@ to pass the async errors to the error handler automatically
 without the need to use next() with every route
 */
 require('express-async-errors');
-
 import 'reflect-metadata';
-import * as path from 'path';
-
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import helmet from 'helmet';
 import mongoose from 'mongoose';
 import { config, checkingEnvVariables } from '../config/config';
-
+import passport from '../config/passport';
+import v1Routers from './routes/v1/routes';
+import { errorHandler } from './middlewares/error-handler';
 class MyApplication {
   public _express: express.Application = express();
   public port: number = parseInt(config.port);
@@ -36,12 +35,14 @@ class MyApplication {
     this._express.use(express.json());
     this._express.use(bodyParser.json());
     this._express.use(bodyParser.urlencoded({ extended: false }));
+    this._express.use(passport.initialize());
   }
 
   /**
    * Set All Application Routes from External Class's
    */
   private appRoutes(): void {
+    this._express.use('/api/v1', v1Routers);
     this.errorRoutes();
   }
 
@@ -50,9 +51,7 @@ class MyApplication {
     this._express.all('*', async (req, res) => {
       res.status(404).send('Not Found!');
     });
-    this._express.use((err, req, res, next) => {
-      res.status(500).send(err.stack);
-    });
+    this._express.use(errorHandler);
   }
 
   /**
