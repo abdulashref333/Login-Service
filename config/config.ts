@@ -13,6 +13,8 @@ export const checkingEnvVariables = () => {
       MONGODB_URL: Joi.string().required().description('Mongo DB url'),
       JWT_SECRET: Joi.string().required().description('JWT secret key'),
       JWT_EXPIRATION: Joi.string().description('time after which access tokens expire'),
+      GOOGLE_CLIENT_ID: Joi.string().required(),
+      GOOGLE_CLIENT_SECRET: Joi.string().required(),
     })
     .unknown();
 
@@ -37,5 +39,9 @@ export const config = {
   jwt: {
     secret: process.env.JWT_SECRET,
     accessExpiration: process.env.JWT_EXPIRATION,
+  },
+  google: {
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
   },
 };

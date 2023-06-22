@@ -29,15 +29,12 @@ const userSchema = new mongoose.Schema<IUser>(
     },
     password: {
       type: String,
-      required: true,
-      trim: true,
-      minlength: 8,
-      validate(value) {
-        if (!value.match(/\d/) || !value.match(/[a-zA-Z]/)) {
-          throw new Error('Password must contain at least one letter and one number');
-        }
-      },
     },
+    googleId: {
+      type: String,
+      default: null,
+    },
+    facebookId: { type: String, default: null },
   },
   {
     timestamps: true,

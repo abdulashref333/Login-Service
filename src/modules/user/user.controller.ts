@@ -18,7 +18,7 @@ class UserController {
     const dataObject: ICreateUser = { firstname, lastname, email, password: hashedPassword };
 
     const user = await UserService.create(dataObject);
-    delete user.password;
+    user.password = undefined;
 
     if (user) {
       // Creating a JWT token for this user, and returning it back in the response
