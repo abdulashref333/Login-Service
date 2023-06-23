@@ -48,12 +48,14 @@ class MyApplication {
    * Set All Application Routes from External Class's
    */
   private appRoutes(): void {
+    this._express.use('/', (req, res) => {
+      res.send('Welcom to Login Service Api created by Abelrahman Ashraf');
+    });
     this._express.use('/api/v1', v1Routers);
     this.errorRoutes();
   }
 
   private errorRoutes() {
-    ////.... IF Request Route not Found.. THRO ERROR
     this._express.all('*', async (req, res) => {
       res.status(404).send('Not Found!');
     });
