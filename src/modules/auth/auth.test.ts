@@ -47,6 +47,14 @@ describe('TEST AUTH MODULE', () => {
     });
   });
 
+  describe('/google API', () => {
+    test('should redirect to google', async () => {
+      const res = await request.get(BASE_URL + '/google');
+
+      expect(res.status).toBe(302);
+    });
+  });
+
   afterAll(async () => {
     await app._db.db.collection('users').deleteMany({});
     await app._db.close();
