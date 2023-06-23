@@ -1,0 +1,28 @@
+version: "3.3"
+
+services:
+  mongodb:
+    image: mongo:5.0.2
+    restart: unless-stopped
+    env_file: ./.env
+    ports:
+      - $MONGODB_LOCAL_PORT:$MONGODB_DOCKER_PORT
+    volumes:
+      - db:/data/db
+  app:
+    depends_on:
+      - mongodb
+    build: .
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      - MONOGODB_HOST=mongodb
+      - MONGODB_DATABASE=$MONGODB_DATABASE
+      - MONGODB_PORT=$MONGODB_DOCKER_PORT
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    tty: true
+
+volumes:
+  db:
