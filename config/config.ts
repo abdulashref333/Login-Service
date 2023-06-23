@@ -10,7 +10,6 @@ export const checkingEnvVariables = () => {
       APP_NAME: Joi.string().default('Login-Service'),
       NODE_ENV: Joi.string().valid('prod', 'dev', 'test').required(),
       PORT: Joi.number().default(3000),
-      MONGODB_URL: Joi.string().required().description('Mongo DB url'),
       JWT_SECRET: Joi.string().required().description('JWT secret key'),
       JWT_EXPIRATION: Joi.string().description('time after which access tokens expire'),
       GOOGLE_CLIENT_ID: Joi.string().required(),
@@ -27,12 +26,21 @@ export const checkingEnvVariables = () => {
   }
 };
 
+const getDbUrl = () => {
+  const { MONGODB_URL, MONOGODB_HOST, MONGODB_DATABASE, MONGODB_PORT } = process.env;
+
+  return MONGODB_URL
+    ? MONGODB_URL
+    : `mongodb://${MONOGODB_HOST}:${MONGODB_PORT}/${MONGODB_DATABASE}` +
+        (process.env.NODE_ENV === 'test' ? '-test' : '') +
+        '?authSource=admin`';
+};
 export const config = {
   appName: process.env.APP_NAME,
   env: process.env.NODE_ENV,
   port: process.env.PORT,
   mongoose: {
-    url: process.env.MONGODB_URL + (process.env.NODE_ENV === 'test' ? '-test' : ''),
+    url: getDbUrl(),
     options: {
       useNewUrlParser: true,
       useUnifiedTopology: true,
