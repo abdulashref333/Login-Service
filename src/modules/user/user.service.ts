@@ -6,8 +6,6 @@ class UserService {
     return await User.create(user);
   }
 
-  async findOne() {}
-
   async isEmailTaken(email: string) {
     const user = await User.findOne({ email });
     return !!user;

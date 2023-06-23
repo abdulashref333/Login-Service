@@ -13,10 +13,12 @@ import passport from '../config/passport';
 import v1Routers from './routes/v1/routes';
 import { errorHandler } from './middlewares/error-handler';
 import morganMiddleware from './middlewares/morgan';
+import Logger from './middlewares/logger';
 
 class MyApplication {
   public _express: express.Application = express();
   public port: number = parseInt(config.port);
+  public _server;
 
   constructor() {
     checkingEnvVariables();
@@ -24,8 +26,8 @@ class MyApplication {
     this.appMiddlewares();
     this.appRoutes();
     this.conn();
-    this._express.listen(this.port, () => {
-      console.log(config.appName + ', Started At Port:' + this.port);
+    this._server = this._express.listen(this.port, () => {
+      Logger.info('Server Running..', 'http://localhost:' + this.port);
     });
   }
 
@@ -64,10 +66,10 @@ class MyApplication {
     mongoose
       .connect(config.mongoose.url, config.mongoose.options)
       .then(() => {
-        console.log('Db Connected Successfully.');
+        Logger.info('Db Connected Successfully.');
       })
       .catch((error) => {
-        console.error(error);
+        Logger.error(error);
       });
   }
 }

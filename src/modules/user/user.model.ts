@@ -1,7 +1,6 @@
 import * as Joi from 'joi';
 import mongoose from 'mongoose';
 import { IUser } from './user.interface';
-import * as bcrypt from 'bcryptjs';
 
 const userSchema = new mongoose.Schema<IUser>(
   {
