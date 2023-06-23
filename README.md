@@ -10,7 +10,7 @@ A Node.js Login Service that supports logging by social media apps like Facebook
 
 ## Requirements
 
-1. [Node & NPM ⬇️](https://nodejs.org/en/) - (node v12), (npm v8)
+1. [Node & NPM ⬇️](https://nodejs.org/en/) - (node version > 16), (npm v8)
 3. [Docker ⬇️](https://docs.docker.com/desktop/install/windows-install/) (optional)
 
 ## Project Setup

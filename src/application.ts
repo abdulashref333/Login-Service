@@ -12,6 +12,8 @@ import { config, checkingEnvVariables } from '../config/config';
 import passport from '../config/passport';
 import v1Routers from './routes/v1/routes';
 import { errorHandler } from './middlewares/error-handler';
+import morganMiddleware from './middlewares/morgan';
+
 class MyApplication {
   public _express: express.Application = express();
   public port: number = parseInt(config.port);
@@ -32,6 +34,7 @@ class MyApplication {
    */
   private appMiddlewares(): void {
     this._express.use(helmet());
+    this._express.use(morganMiddleware);
     this._express.use(express.json());
     this._express.use(bodyParser.json());
     this._express.use(bodyParser.urlencoded({ extended: false }));
