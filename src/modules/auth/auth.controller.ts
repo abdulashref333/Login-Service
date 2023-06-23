@@ -14,7 +14,7 @@ class AuthController {
       return CustomResponse.sendWithError(res, 'Invalid Credentials!', 400);
     }
 
-    const isMatch = Password.compare(password, user.password);
+    const isMatch = await Password.compare(user.password, password);
     if (isMatch) {
       const token = JWT.sign(user as IUserSerialized);
 

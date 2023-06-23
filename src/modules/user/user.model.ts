@@ -28,6 +28,7 @@ const userSchema = new mongoose.Schema<IUser>(
     },
     password: {
       type: String,
+      default: null,
     },
     googleId: {
       type: String,

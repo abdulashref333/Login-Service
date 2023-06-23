@@ -19,6 +19,7 @@ class MyApplication {
   public _express: express.Application = express();
   public port: number = parseInt(config.port);
   public _server;
+  public _db;
 
   constructor() {
     checkingEnvVariables();
@@ -63,14 +64,13 @@ class MyApplication {
    * Database Connection and Configration
    */
   public async conn() {
-    mongoose
-      .connect(config.mongoose.url, config.mongoose.options)
-      .then(() => {
-        Logger.info('Db Connected Successfully.');
-      })
-      .catch((error) => {
-        Logger.error(error);
-      });
+    try {
+      const connection = await mongoose.connect(config.mongoose.url, config.mongoose.options);
+      Logger.info('Db Connected Successfully.');
+      this._db = connection.connection;
+    } catch (error) {
+      Logger.error(error);
+    }
   }
 }
 

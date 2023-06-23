@@ -9,7 +9,7 @@ export class CustomResponse {
 
   static sendUser(res: Response, user: IUserSerialized, message = 'done', status: number = 200) {
     user.password = undefined;
-    res.status(status).json({ user, message, status });
+    res.status(status).json({ data: { user }, message, status });
   }
   static sendWithoutData(res: Response, message = 'done', status = 200) {
     res.status(status).json({ status, message });
