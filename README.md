@@ -22,6 +22,12 @@ PORT=3000
 APP_NAME=Login-Service
 
 MONGODB_URL=
+MONOGODB_HOST=localhost
+MONGODB_DATABASE=login-service-db
+MONGODB_PORT=27017
+
+MONGODB_LOCAL_PORT=7017
+MONGODB_DOCKER_PORT=27017
 
 JWT_SECRET=jsonwebtokensecret22
 JWT_EXPIRATION=1d
@@ -36,7 +42,9 @@ GOOGLE_CLIENT_SECRET=
 FACEBOOK_APP_ID=
 FACEBOOK_APP_SECRET=
 ```
-Then you have to options run the project using docker as follows on the next section or follow the instruction of the second section.
+2. to generate your google credentials go to [link](https://console.cloud.google.com/apis/credentials)  
+
+Then you have to options run the project using docker as follows in the next section or follow the instruction of the second section.
 ### Run Using Docker
 1. run this command
 ```
